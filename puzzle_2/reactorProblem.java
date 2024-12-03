@@ -69,7 +69,6 @@ class Main {
 		for (String arg : args) {
 			lists = parse_input(arg);
 		}
-		System.out.println("number of reports: " + lists.size());
 		int report_count = 0;
 		for (List<Integer> list : lists) {
 			report_count = report_count + safe_reports(list);
