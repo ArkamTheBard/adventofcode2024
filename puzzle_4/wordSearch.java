@@ -25,12 +25,41 @@ class Main {
         return stringMatrix;
     }
 
+    public static int word_search_part_2(char[][] matrix) {
+        int occurrences = 0;
+        String to_match = "mas";
+        String to_match_reverse = "sam";
+        for (int i = 0; i < matrix.length; ++i) {
+            for (int j = 0; j < matrix[i].length; ++j) {
+                String temp_string = "";
+                String temp_string2 = "";
+                if (Character.toLowerCase(matrix[i][j]) != 'a') {
+                    continue;
+                }
+                if (i == 0) {
+                    continue;
+                }
+                if (j == 0) {
+                    continue;
+                }
+                if (j == matrix[i].length-1 || i == matrix.length-1) {
+                    continue;
+                }
+                temp_string += Character.toString(matrix[i+1][j-1]) + Character.toString(matrix[i][j]) + Character.toString(matrix[i-1][j+1]);
+                temp_string2 += Character.toString(matrix[i+1][j+1]) + Character.toString(matrix[i][j]) + Character.toString(matrix[i-1][j-1]);
+                if ((temp_string.equalsIgnoreCase(to_match) || temp_string.equalsIgnoreCase(to_match_reverse)) && (temp_string2.equalsIgnoreCase(to_match) || temp_string2.equalsIgnoreCase(to_match_reverse))) {
+                    ++occurrences;
+                }
+            }
+        }
+        return occurrences;
+    }
+
     public static int word_search(char[][] matrix) {
         int occurrences = 0;
         String to_match = "xmas";
         for (int i = 0; i < matrix.length; ++i) {
             for (int j = 0; j < matrix[i].length; ++j) {
-                char current_char = matrix[i][j];
                 String temp_string = "";
                 if (Character.toLowerCase(matrix[i][j]) != 'x') {
                     continue;
@@ -123,7 +152,10 @@ class Main {
         }
         int occurrences = 0;
         occurrences = word_search(arrayMatrix);
+        int occurrences2 = 0;
+        occurrences2 = word_search_part_2(arrayMatrix);
         System.out.println(occurrences);
+        System.out.println(occurrences2);
         long endTime = System.nanoTime();
         long duration = endTime - startTime;
         System.out.println("Execution in miliseconds: " + duration/1000000);
